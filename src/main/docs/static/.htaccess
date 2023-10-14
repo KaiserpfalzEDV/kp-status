@@ -1,0 +1,8 @@
+SetOutputFilter DEFLATE
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^www.kaiserpfalz-edv.de$
+RewriteRule ^(.*)$ https://www.kaiserpfalz-edv.de/$1 [R=301,L]
+
+
+ErrorDocument 404 /404.html
