@@ -85,7 +85,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>de.kaiserpfalz-edv.status</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>kp-status-bom</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
@@ -404,10 +404,6 @@
                 <dependency>
                     <groupId>com.fasterxml.jackson.module</groupId>
                     <artifactId>jackson-module-jsonSchema-jakarta</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>com.fasterxml.jackson.module</groupId>
-                    <artifactId>jackson-module-java8</artifactId>
                 </dependency>
                 <dependency>
                     <groupId>com.fasterxml.jackson.module</groupId>
