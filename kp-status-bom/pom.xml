@@ -148,9 +148,10 @@
             <!-- OpenAPI documentation -->
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi</artifactId>
-                <version>2.2.0</version>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.6.11</version>
             </dependency>
+            
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

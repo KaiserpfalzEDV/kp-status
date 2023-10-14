@@ -389,9 +389,10 @@
                 <!-- openapi/swagger -->
                 <dependency>
                     <groupId>org.springdoc</groupId>
-                    <artifactId>springdoc-openapi</artifactId>
+                    <artifactId>springdoc-openapi-ui</artifactId>
+                    <version>1.6.11</version>
                 </dependency>
-
+                
                 <!-- JSon/XML handling -->
                 <dependency>
                     <groupId>com.fasterxml.jackson.core</groupId>
