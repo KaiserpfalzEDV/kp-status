@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2022 Kaiserpfalz EDV-Service, Roland T. Lichti.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>de.kaiserpfalz-edv.status</groupId>
+        <artifactId>kp-status-root</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>kp-status-bom</artifactId>
+    <name>KP Status :: Bill of Materials</name>
+
+    <properties>
+        <kp-status.groupId>de.kaiserpfalz-edv.status</kp-status.groupId>
+        <kp-status.version>0.1.0</kp-status.version>
+
+        <surefire-plugin.version>2.22.1</surefire-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-core</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-data</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-api</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-mock</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-parent</artifactId>
+                <version>${kp-status.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-bom</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-ui</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-parent</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-service-parent</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+
+
+            <!-- spring-framework -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>6.0.13</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Spring Data -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-bom</artifactId>
+                <version>2023.0.5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Kubernetes integration -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-kubernetes</artifactId>
+                <version>3.0.4</version>
+            </dependency>
+
+
+            <!-- REST Client -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-openfeign</artifactId>
+                <version>4.0.4</version>
+            </dependency>
+
+
+            <!-- Circuit Breaker -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-circuitbreaker</artifactId>
+                <version>3.0.3</version>
+            </dependency>
+
+            
+            <!-- problem/json error report -->
+            <dependency>
+                <groupId>org.zalando</groupId>
+                <artifactId>problem-spring-web</artifactId>
+                <version>0.29.1</version>
+            </dependency>
+
+            <!-- OpenAPI documentation -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>2.2.0</version>
+            </dependency>
+
+            <!-- Observability/Metrics -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>3.1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>3.1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>1.11.5</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- Observabitlity/Tracing -->
+            <dependency>
+                <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-api</artifactId>
+                <version>0.33.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing.contrib</groupId>
+                <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+
+
+            <!-- Observability/Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-bom</artifactId>
+                <version>2.0.9</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>2.20.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Caching -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-cache</artifactId>
+                <version>3.1.4</version>
+            </dependency>
+
+            <!-- json/xml -->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.15.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <!-- Annotation handling -->
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+
+
+            <!-- lombok - syntactical sugar -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.30</version>
+            </dependency>
+
+
+            <!-- Generic apache commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.13.0</version>
+            </dependency>
+
+
+            <!-- Generate bytecode information -->
+            <dependency>
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex</artifactId>
+                <version>3.1.5</version>
+                <scope>compile</scope>
+            </dependency>
+
+
+            <!-- Evaluate mathematical expressions -->
+            <dependency>
+                <groupId>net.objecthunter</groupId>
+                <artifactId>exp4j</artifactId>
+                <version>0.4.8</version>
+            </dependency>
+
+
+            <!-- MarkDown Library -->
+            <dependency>
+                <groupId>com.github.rjeschke</groupId>
+                <artifactId>txtmark</artifactId>
+                <version>0.13</version>
+            </dependency>
+
+
+            <!-- Encryption -->
+            <dependency>
+                <groupId>org.connectbot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+
+
+            <!-- testing -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.10.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.19.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-jre8</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

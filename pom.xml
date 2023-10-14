@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2021 Kaiserpfalz EDV-Service, Roland T. Lichti.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses />.
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.kaiserpfalz-edv.status</groupId>
+    <artifactId>kp-status-root</artifactId>
+    <version>0.1.0</version>
+    <packaging>pom</packaging>
+
+    <name>KP STATUS :: Root</name>
+    <description>
+        This is a service to display state of runtime services. It does not gather information but offers an API to
+        import state information about systems. It is inspired by https://cachet.io/.
+    </description>
+
+    <modules>
+        <module>kp-status-parent</module>
+        <module>kp-status-service-parent</module>
+        <module>kp-status-bom</module>
+
+        <module>kp-status-api</module>
+        <module>kp-status-mock</module>
+        <module>kp-status-core</module>
+
+        <module>kp-status-data</module>
+        <module>kp-status-service</module>
+        <module>kp-status-ui</module>
+    </modules>
+
+    <scm>
+        <url>https://github.com/KaiserpfalzEDV/kp-status</url>
+        <connection>scm:git:git://github.com/KaiserpfalzEDV/kp-status.git</connection>
+        <developerConnection>scm:git:git@github.com:KaiserpfalzEDV/kp-status.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Paladins Inn Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/KaiserpfalzEDV/kp-status</url>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>production</id>
+        </profile>
+
+        <profile>
+            <id>release</id>
+        </profile>
+
+        <profile>
+            <id>site</id>
+
+            <properties>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.12.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>3.4.1</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <version>3.0.0-M7</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <configuration>
+                            <skip>${maven.javadoc.skip}</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <configuration>
+                            <skip>${maven.javadoc.skip}</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>github</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2/</url>
+                </repository>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/KaiserpfalzEDV</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+
+    <profile>
+      <id>helm</id>
+      <activation>
+        <file>
+          <exists>src/main/helm</exists>
+        </file>
+      </activation>
+
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/helm</directory>
+            <targetPath>../../helm</targetPath>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
+</project>
