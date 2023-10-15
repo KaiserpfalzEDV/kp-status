@@ -1,8 +1,8 @@
 title = "KP-STATUS"
 baseURL = "/"
 
-languageCode = "de-de"
-defaultContentLanguage = "de"
+languageCode = "en-uk"
+defaultContentLanguage = "en"
 
 # remove tags and categories pages
 disableKinds = ["taxonomy", "taxonomyTerm"]
@@ -19,7 +19,7 @@ home = [ "HTML", "RSS", "JSON"]
 
 [params]
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
-  themeVariant = "red"
+  themeVariant = "blue"
 
 [Blackfriday]
 # opens absolute links in a new window or tab
@@ -31,12 +31,12 @@ unsafe = true
 [Languages]
 [Languages.de]
 title = "KP-STATUS"
-weight = 1
+weight = 2
 languageName = "Deutsch"
 
 [Languages.en]
 title = "KP-STATUS"
-weight = 2
+weight = 1
 languageName = "English"
 
 

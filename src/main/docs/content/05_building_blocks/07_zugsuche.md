@@ -7,12 +7,14 @@ weight = 17
 ## 5.7 Zugsuche (Blackbox)
 
 ### Zweck/Verantwortlichkeit
+
 Das Modul ermittelt zu einer Stellung den unter bestimmten Bedingungen optimalen Zug.
 Theoretisch gäbe es im Schach einen generell optimalen Zug.
 Die hohe Anzahl der möglichen Züge und die damit verbundene schier unglaubliche Anzahl zu bewertender Spielsituationen macht es in der Praxis aber unmöglich, ihn zu bestimmen.
 Gängige Algorithmen wie der Minimax begnügen sich daher damit, den "Spielbaum" nur bis zu einer bestimmten Tiefe zu explorieren.
 
 ### Schnittstellen
+
 Das Modul stellt seine Funktionalität über die Schnittstelle _de.kp-status.engine.suche.Suche_ zur Verfügung.
 
 Der Minimax-Algorithmus liegt in der Klasse _de.kp-status.engine.suche.MinimaxAlgorithmus_ vor.
@@ -21,9 +23,7 @@ Sie untersucht mehrere Teilbäume parallel; wenn sie einen besseren Zug findet e
 Den Abschluss der Suche signalisiert die Suche über die Nachricht _onComplete_.
 
 ![Schnittstelle Suche, Klassen MinimaxAlgorithmus und MinimaxParalleleSuche](/images/Abb09_14_Schnittstellen_Zugsuche.png "Schnittstelle Suche, Klassen MinimaxAlgorithmus und MinimaxParalleleSuche")
-
 *Bild: Schnittstelle Suche, Klassen MinimaxAlgorithmus und MinimaxParalleleSuche*
-
 
 | Methode | Kurzbeschreibung |
 |---------|------------------|
