@@ -42,13 +42,8 @@ languageName = "English"
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-user-circle'></i> Über den Autor"
-url = "/autor/"
+url = "/author/"
 weight = 10
-
-[[menu.shortcuts]]
-name = "<i class='fas fa-star'></i> Abspann (Credits)"
-url = "/abspann/"
-weight = 11
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Quelltexte (GitHub)"
@@ -67,17 +62,7 @@ url = "/author/"
 weight = 10
 
 [[Languages.en.menu.shortcuts]]
-name = "<i class='fas fa-star'></i> Credits"
-url = "/credits/"
-weight = 11
-
-[[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Source code (GitHub)"
 identifier = "ds"
 url = "https://github.com/KaiserpfalzEDV/kp-status"
 weight = 12
-
-[[Languages.en.menu.shortcuts]]
-name = "<i class='fas fa-info-circle'></i> Site Notice"
-url = "/site_notice/"
-weight = 13

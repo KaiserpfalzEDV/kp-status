@@ -1,14 +1,15 @@
 +++
-title = "Randbedingungen"
+title = "Contextual Constraints"
 chapter = true
 weight = 2
 pre = "<b>2. </b>"
-description="Beim Lösungsentwurf waren zu Beginn verschiedene Randbedingungen zu beachten, sie wirken in der Lösung fort."
+description="There has been different context constraints on the solution design. They influence the solution."
 +++
 
-### Abschnitt 2
+### Chapter 2
 
-# Randbedingungen
+# Contextual Constraints
 
-Beim Lösungsentwurf waren zu Beginn verschiedene Randbedingungen zu beachten, sie wirken in der Lösung fort.
-Dieser Abschnitt stellt sie dar und erklärt auch – wo nötig – deren Motivation.
+There has been different context constraints on the solution design.
+They influence the solution.
+This chapter lists them and explains their motivation if necessary.

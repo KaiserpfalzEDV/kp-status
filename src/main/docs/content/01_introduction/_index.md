@@ -1,13 +1,13 @@
 +++
-title = "Einführung und Ziele"
+title = "Introduction and Objectices"
 chapter = true
 weight = 1
 pre = "<b>1. </b>"
-description="Dieser Abschnitt führt in die Aufgabenstellung ein und skizziert die Ziele, die kp-status verfolgt."
+description="This chapter is an introduction to the objectives of KP-STATUS."
 +++
 
-### Abschnitt 1
+### Chapter 1
 
-# Einführung und Ziele
+# Introduction and Objectives
 
-Dieser Abschnitt führt in die Aufgabenstellung ein und skizziert die Ziele, die kp-status verfolgt.
+This chapter is an introduction to the objectives of KP-STATUS.

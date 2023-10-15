@@ -5,19 +5,19 @@ weight = 15
 
 ### Angaben gemäß § 5 TMG
 
-Roland T. Lichti
-Darmstädter Str. 12
-64625 Bensheim
+> Roland T. Lichti
+> Darmstädter Str. 12
+> 64625 Bensheim
 
 ### Kontakt
 
-E-Mail: rlichti@kaiserpfalz-edv.de
+E-Mail: [rlichti@kaiserpfalz-edv.de](mailto:rlichti@kaiserpfalz-edv.de)
 
 ### Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
 
-Roland T. Lichti
-Darmstädter Str. 12
-64625 Bensheim
+> Roland T. Lichti
+> Darmstädter Str. 12
+> 64625 Bensheim
 
 Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
 

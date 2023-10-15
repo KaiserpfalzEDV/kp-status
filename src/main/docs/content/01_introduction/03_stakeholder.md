@@ -1,17 +1,19 @@
 +++
-title = "Stakeholder"
-menuTitle = "1.3 Stakeholder"
+title = "Stake Holders"
+menuTitle = "1.3 Stake Holders"
 weight = 17
-description = "Stellt die Stakeholder von kp-status und ihre jeweilige Intention dar."
+description = "Lists the stake holders and their intentions to use KP-STATUS."
 +++
 
-## 1.3 Stakeholder
+## 1.3 Stake Holder
 
-Die folgende Tabelle stellt die Stakeholder von kp-status und ihre jeweilige Intention dar.
+Lists the stake holders and their intentions to use KP-STATUS.
+The entries are ordered by importance.
 
+{{< /*<!-- markdownlint-disable MD033 -->*/ >}}
 | Wer?                | Interesse, Bezug           |
 |---------------------|----------------------------|
-| Softwarearchitektinnen und -architekten | <ul> <li>wollen ein Gefühl bekommen, wie Architekturdokumentation für ein konkretes System aussehen kann <li>möchten sich Dinge (z.B. Form, Notation) für Ihre tägliche Arbeit abgucken <li>gewinnen Sicherheit für Ihre eigenen Dokumentationsvorhaben <li>haben in der Regel keine tiefen Schachkenntnisse</ul>|
-| Entwicklerinnen und Entwickler | <ul> <li>nehmen auch Architekturaufgaben im Team wahr <li>bekommen beim Studium von kp-status Lust, selbst eine Schach-Engine zu implementieren <li>sind neugierig auf konkrete Anregungen, wie man das macht</ul>|
-|Stefan Zörner|	<ul><li>benötigt attraktive Beispiele für sein Buch <li> will kp-status in Workshops und Vorträgen zu Softwareentwurf und -architektur als Anschauungsmaterial verwenden|
-|oose Innovative Informatik|<ul><li>Schulungsunternehmen, Arbeitgeber von Stefan Zörner zum Zeitpunkt der Konzeption von kp-status<li>bietet Seminare, Workshops und Coaching zu Themen rund um Softwareentwicklung an</ul>|
+| Consumer            | <ul> <li>Want to get the current state of the service.</li> <li>Want to get information about service degradations.</li> <li>Want to be informed about upcoming maintenance work.</li> </ul> |
+| Operational Staff   | <ul> <li>Want to inform consumers to decrease ticket load during service degradations.</li> <li>Want to inform consumers about upcoming maintenance work.</li> <li>Want to check on service state of services they depend on.</li> </ul> |
+| Technical Services  | <ul> <li>Check the REST API for state of services they depend on.</li> </ul> |
+{{< /*<!-- markdownlint-enable MD033 -->*/ >}}
