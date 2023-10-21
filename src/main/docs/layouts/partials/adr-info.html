@@ -1,0 +1,22 @@
+<table>
+    <tr><th>Code</th><td>ADR-{{ .Params.code }}</td></tr>
+    <tr><th>State</th><td>
+      {{ if .Params.supersededBy }}
+        superseded by [ADR-{{ .Params.supersededBy }}](/09_decisions/adr-{{ .Params.supersededBy }}/)
+      {{ else }}
+        {{ .Params.state }}
+      {{ end }}
+    </td></tr>
+    {{ if .Params.deciders }}
+      <tr><th>Deciders</th><td>{{ .Params.deciders }}</td></tr>
+    {{ end }}
+    {{ if .Params.consulted }}
+      <tr><th>Consulted</th><td>{{ .Params.consulted }}</td></tr>
+    {{ end }}
+    {{ if .Params.informed }}
+      <tr><th>Informed</th><td>{{ .Params.informed }}</td></tr>
+    {{ end }}
+    {{ if .Params.supersedes }}
+      <tr><th>Supersedes</th><td>{{ .Params.supersedes }}</td></tr>
+    {{ end }}
+  </table>

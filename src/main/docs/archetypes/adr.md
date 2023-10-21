@@ -1,18 +1,19 @@
-+++
-title = "ADR-1 - Clean Architecture"
-menuTitle = "9.1 Clean Architecture (ADR-1)"
-weight = 1
-+++
+---
+adr: true
+code: 999
+supersededBy: ""
+title: "{{ replace .Name "-" " " | title }}"
+date: {{ .Date }}
+draft: true
+weight: 1
 
----
 # These are optional elements. Feel free to remove any of them.
-status: "{proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)}"
-date: 2023-10-15
+state: "{proposed | rejected | accepted | deprecated | … | superseded"
 deciders: klenkes74
-consulted: --
-informed: --
+consulted: ""
+informed: ""
+supersedes: ""
 ---
-# System Architecture to use for this system
 
 ## Context and Problem Statement
 
