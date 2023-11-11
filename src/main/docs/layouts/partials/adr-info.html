@@ -2,7 +2,7 @@
     <tr><th>Code</th><td>ADR-{{ .Params.code }}</td></tr>
     <tr><th>State</th><td>
       {{ if .Params.supersededBy }}
-        superseded by [ADR-{{ .Params.supersededBy }}](/09_decisions/adr-{{ .Params.supersededBy }}/)
+        superseded by <a href="/09_decisions/adr-{{ .Params.supersededBy }}/">ADR-{{ .Params.supersededBy }}</a>
       {{ else }}
         {{ .Params.state }}
       {{ end }}

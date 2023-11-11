@@ -1,13 +1,13 @@
-+++
-title = "Querschnittliche Konzepte"
-chapter = true
-weight = 8
-pre = "<b>8. </b>"
-description="Dieser Abschnitt beschreibt allgemeine Strukturen und Aspekte, die systemweit gelten."
-+++
+---
+title: Cross-cutting Concepts
+chapter: true
+weight: 8
+pre: "<b>8</b> "
+description: "This chapter is about all cross-cutting concepts and aspects of the system."
+---
 
-### Abschnitt 8
+### Chapter 8
 
-# Querschnittliche Konzepte
+# Cross-cutting concepts
 
-Dieser Abschnitt beschreibt allgemeine Strukturen und Aspekte, die systemweit gelten. Darüber hinaus stellt er verschiedene technische Lösungskonzepte vor.
+This chapter is about all cross-cutting concepts and aspects of the system.
