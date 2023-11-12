@@ -20,8 +20,6 @@ package de.kaiserpfalzedv.status.model.service;
 import java.util.HashSet;
 import java.util.UUID;
 
-import org.apache.commons.lang3.builder.EqualsExclude;
-
 import de.kaiserpfalzedv.status.model.Metadata;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -60,6 +58,10 @@ public class Service {
     @Default
     private final HashSet<Service> dependencies = new HashSet<>();
 
+    /** The current service state. */
+    @ToString.Include
+    private final ServiceState state;
+
 
     /** The ID of the service. */
     public UUID getId() {
@@ -81,11 +83,24 @@ public class Service {
         return metadata.isDeleted();
     }
 
+    public boolean isDown() {
+        return state.isDown();
+    }
+
+    public Service fail(final Degradation degradation) {
+        return toBuilder().fail(degradation).build();
+    }
+
+    public Service recover() {
+        return toBuilder().recover().build();
+    }
+
     /** 
      * The builder that will be augmented by lombok.
      */
     public static class ServiceBuilder {
         private Metadata metadata = Metadata.builder().build();
+        private ServiceState state = ServiceStateUp.builder().build();
 
         public ServiceBuilder metadata(@NotNull final Metadata metadata) {
             this.metadata = metadata;
@@ -104,6 +119,16 @@ public class Service {
 
         public ServiceBuilder name(@NotNull final String name) {
             metadata = metadata.toBuilder().name(name).modify().build();
+            return this;
+        }
+
+        public ServiceBuilder fail(@NotNull Degradation degradation) {
+            state = state.fail(degradation);
+            return this;
+        }
+
+        public ServiceBuilder recover() {
+            state = state.recover();
             return this;
         }
 

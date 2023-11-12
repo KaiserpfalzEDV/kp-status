@@ -60,6 +60,9 @@ classDiagram
     ServiceState ..|> HasDuration
     ServiceState --* Degradation
     class ServiceState {
+        -Degradation degradation
+        -OffsetDateTime timestamp
+
         +getDegradation() Degradation
     }
 
@@ -68,11 +71,8 @@ classDiagram
         +is(State) boolean
         +isUp() boolean
         +isDown() boolean
-        +isDegraded() boolean
         +recover()
-        +recoverPartly()
         +fail()
-        +degrade()
     }
 
     StateEvent --> HasId
@@ -221,7 +221,6 @@ classDiagram
         +getStart() OffsetDateTime
         +getEnd() OffsetDateTime
         +getDuration() Duration
-        +getPeriod() Period
     }
 {{< /mermaid >}}
 
@@ -230,15 +229,8 @@ classDiagram
 {{< mermaid >}}
 stateDiagram-v2
     up : Service available
-    degrade : Service degraded
     down : Service unavailable
 
     up --> down : fail
-    up --> degrade : degrade
-
     down --> up : recover
-    down --> degrade : recover partly
-
-    degrade --> up : recover
-    degrade --> down: fail
 {{< /mermaid >}}
