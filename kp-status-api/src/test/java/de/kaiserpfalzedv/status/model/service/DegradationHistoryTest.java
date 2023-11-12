@@ -19,15 +19,15 @@ package de.kaiserpfalzedv.status.model.service;
 
 
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.Builder.Default;
 import lombok.extern.jackson.Jacksonized;
 
 
@@ -43,9 +43,15 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DegradationHistory {
-    @Default
-    private final OffsetDateTime timestamp = OffsetDateTime.now(ZoneOffset.UTC);
-    
-    private final String description;
+public class DegradationHistoryTest {
+    private static final Degradation DEFAULT = Degradation.builder().build();
+
+    @Test
+    public void shouldAddANoteWhenDegragationExists() {
+        Degradation result = DEFAULT.addNote("Test note.");
+
+        assert result != null;
+
+        assertEquals(1, result.getHistory().size());
+    }
 }

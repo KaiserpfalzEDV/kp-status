@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.kaiserpfalzedv.status.model.Metadata;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -55,4 +56,15 @@ public class Degradation {
 
     @Default
     private final List<DegradationHistory> history = new ArrayList<>();
+
+
+    public Degradation addNote(@NotEmpty final String note) {
+        DegradationHistory entry = DegradationHistory.builder()
+                .description(note)
+                .build();
+        List<DegradationHistory> entries = new ArrayList<>(history);
+        entries.add(entry);
+
+        return toBuilder().history(entries).build();
+    }
 }
