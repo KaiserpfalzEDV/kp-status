@@ -17,12 +17,13 @@
  */
 package de.kaiserpfalzedv.status.model;
 
-import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -42,29 +43,67 @@ import lombok.extern.jackson.Jacksonized;
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Service {
+    /** The metadata of this service. */
+    @NotNull
     private final Metadata metadata;
-    
 
+    /** The services composing this service. */
+    @Default
+    private final HashSet<Service> subServices = new HashSet<>();
+
+    /** The other services this service depends on. */
+    @Default
+    private final HashSet<Service> dependencies = new HashSet<>();
+
+
+    /** The ID of the service. */
+    public UUID getId() {
+        return metadata.getId();
+    }
+
+    /** The namespace of this service. */
+    public String getNamespace() {
+        return metadata.getNamespace();
+    }
+
+    /** The name of this service. */
+    public String getName() {
+        return metadata.getName();
+    }
+
+    /** If this service is deleted. */
+    public boolean isDeleted() {
+        return metadata.isDeleted();
+    }
+
+    /** 
+     * The builder that will be augmented by lombok.
+     */
     public static class ServiceBuilder {
         private Metadata metadata = Metadata.builder().build();
 
+        public ServiceBuilder metadata(@NotNull final Metadata metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
         public ServiceBuilder id(@NotNull final UUID id) {
-            metadata = metadata.toBuilder().id(id).build();
+            metadata = metadata.toBuilder().id(id).modify().build();
             return this;
         }
 
-        public ServiceBuilder created(@NotNull final OffsetDateTime date) {
-            metadata = metadata.toBuilder().created(date).build();
+        public ServiceBuilder namespace(@NotNull final String name) {
+            metadata = metadata.toBuilder().namespace(name).modify().build();
             return this;
         }
 
-        public ServiceBuilder modified(@NotNull final OffsetDateTime date) {
-            metadata = metadata.toBuilder().modified(date).build();
+        public ServiceBuilder name(@NotNull final String name) {
+            metadata = metadata.toBuilder().name(name).modify().build();
             return this;
         }
 
-        public ServiceBuilder deleted(@NotNull final OffsetDateTime date) {
-            metadata = metadata.toBuilder().deleted(date).build();
+        public ServiceBuilder delete() {
+            metadata = metadata.toBuilder().delete().build();
             return this;
         }
 
