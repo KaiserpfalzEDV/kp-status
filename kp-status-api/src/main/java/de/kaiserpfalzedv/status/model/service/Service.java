@@ -15,11 +15,14 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model;
+package de.kaiserpfalzedv.status.model.service;
 
 import java.util.HashSet;
 import java.util.UUID;
 
+import org.apache.commons.lang3.builder.EqualsExclude;
+
+import de.kaiserpfalzedv.status.model.Metadata;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,6 +48,8 @@ import lombok.extern.jackson.Jacksonized;
 public class Service {
     /** The metadata of this service. */
     @NotNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private final Metadata metadata;
 
     /** The services composing this service. */

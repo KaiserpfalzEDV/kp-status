@@ -52,18 +52,23 @@ public class Metadata {
 
     /** The ID of the object. */
     @NotNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private final UUID id;
 
     /** The namespace of this object. */
     @NotNull
+    @ToString.Include
     private final String namespace;
 
     /** The name of the object. Defaults to a string representation of the ID. */
     @NotNull
+    @ToString.Include
     private final String name;
 
     /** The creation timestamp of the object. */
     @NotNull
+    @ToString.Include
     private final OffsetDateTime created;
 
     /** The last modification of the object. */
