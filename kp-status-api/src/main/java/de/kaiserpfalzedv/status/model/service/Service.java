@@ -18,6 +18,7 @@
 package de.kaiserpfalzedv.status.model.service;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.status.model.Metadata;
@@ -52,11 +53,11 @@ public class Service {
 
     /** The services composing this service. */
     @Default
-    private final HashSet<Service> subServices = new HashSet<>();
+    private final Set<Service> subServices = new HashSet<>();
 
     /** The other services this service depends on. */
     @Default
-    private final HashSet<Service> dependencies = new HashSet<>();
+    private final Set<Service> dependencies = new HashSet<>();
 
     /** The current service state. */
     @ToString.Include
@@ -83,8 +84,15 @@ public class Service {
         return metadata.isDeleted();
     }
 
+    /**
+     * Checks if this service or any service it depends on or is composed of is down.
+     * 
+     * @return true, if the service or any dependency is down.
+     */
     public boolean isDown() {
-        return state.isDown();
+        return state.isDown() 
+                || subServices.stream().anyMatch(Service::isDown)
+                || dependencies.stream().anyMatch(Service::isDown);
     }
 
     public Service fail(final Degradation degradation) {
@@ -93,6 +101,20 @@ public class Service {
 
     public Service recover() {
         return toBuilder().recover().build();
+    }
+
+    public Service addSubService(final Service subService) {
+        Set<Service> subservices = new HashSet<>(getSubServices());
+        subservices.add(subService);
+
+        return toBuilder().subServices(subservices).build();
+    }
+
+    public Service addDependencies(final Service dependency) {
+        Set<Service> dependencies = new HashSet<>(getDependencies());
+        dependencies.add(dependency);
+
+        return toBuilder().dependencies(dependencies).build();
     }
 
     /** 
