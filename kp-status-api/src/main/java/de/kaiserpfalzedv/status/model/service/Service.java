@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.status.model.HasMetadata;
 import de.kaiserpfalzedv.status.model.Metadata;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -44,7 +45,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Service {
+public class Service implements HasMetadata {
     /** The metadata of this service. */
     @NotNull
     @EqualsAndHashCode.Include
@@ -63,26 +64,6 @@ public class Service {
     @ToString.Include
     private final ServiceState state;
 
-
-    /** The ID of the service. */
-    public UUID getId() {
-        return metadata.getId();
-    }
-
-    /** The namespace of this service. */
-    public String getNamespace() {
-        return metadata.getNamespace();
-    }
-
-    /** The name of this service. */
-    public String getName() {
-        return metadata.getName();
-    }
-
-    /** If this service is deleted. */
-    public boolean isDeleted() {
-        return metadata.isDeleted();
-    }
 
     /**
      * Checks if this service or any service it depends on or is composed of is down.

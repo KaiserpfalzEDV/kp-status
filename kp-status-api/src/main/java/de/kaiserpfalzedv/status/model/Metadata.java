@@ -79,32 +79,6 @@ public class Metadata {
     @Null
     private final OffsetDateTime deleted;
 
-
-    /**
-     * @return A modified Metadata object with the current time as modification date.
-     */
-    public Metadata update() {
-        return toBuilder()
-                .modified(OffsetDateTime.now(ZoneOffset.UTC))
-                .build();
-    }
-
-    /**
-     * @return A modified Metadata object with the current time as deletion date.
-     */
-    public Metadata delete() {
-        return toBuilder()
-                .delete()
-                .build();
-    }
-
-    /** Removes the deletion timestamp. */
-    public Metadata undelete() {
-        return toBuilder()
-                .undelete()
-                .build();
-    }
-
     /**
      * @return true if the object is deleted.
      */
