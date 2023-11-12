@@ -7,23 +7,38 @@ weight: 2
 {{< mermaid >}}
 classDiagram
 
+    class Metadata {
+        +getId() UUID
+        +getNamespace() String
+        +getName() String
+        +isDeleted() boolean
+        +getCreated() OffsetDateTime
+        +getModified() OffsetDateTime
+        +getDeleted() OffsetDateTime
+    }
+
     ServiceRepository ..> Service
+    ServiceRepository ..> ServiceHistory
     class ServiceRepository {
         +createService(Service) Service
         +retrieveServiceById(UUID) Service
         +deleteService(Service)
+        +getHistory(Service) ServiceHistory
     }
 
+    Service *-- Metadata
     Service ..|> Identifiable
-    Service --o Service
+    Service --o Service : subServices
+    Service --o Service : dependencies
     Service o-- ServiceState
     Service o-- OperationalLevelAgreement
     class Service {
-        -ServiceState current
-        -ServiceState[] history
+        -ServiceState state
         -OperationalLevelAgreement[] operationalLevelAgreements
         -Service[] subServices
+        -Service[] dependencies
         +getSubServices() Service[]
+        +getDependencies() Service[]
         +getLastTransition() OffsetDateTime
         +getState() State
         +getOperationalLevelAgreements() OperationalLevelAgreement[]
@@ -32,6 +47,13 @@ classDiagram
         +isDown() boolean
         +isDegraded() boolean
         +addEvent(ReportEvent)
+    }
+
+    ServiceHistory --o Service
+    ServiceHistory o-- ServiceState
+    class ServiceHistory {
+        +getService() Service
+        +getHistory() ServiceState[]
     }
 
     ServiceState ..|> State
@@ -76,6 +98,7 @@ classDiagram
         +getPlannedDowntimeId() UUID
     }
 
+    ReportEvent *-- Metadata
     ReportEvent ..|> HasEstimatedSolutionTime
     ReportEvent --> HasId
     class ReportEvent {
@@ -96,7 +119,7 @@ classDiagram
 
     OperationalLevelAgreement ..|> Identifiable
     OperationalLevelAgreement *-- State
-
+    OperationalLevelAgreement *-- Metadata
     class OperationalLevelAgreement {
         -Duration duration
         -double availability
@@ -106,6 +129,7 @@ classDiagram
         +getViolationState() State
     }
 
+    DegradationService *-- Metadata
     DegradationService ..> Degradation
     DegradationService ..> ReportDegradedEvent
     DegradationService ..> ReportDownEvent
@@ -130,6 +154,7 @@ classDiagram
         +retrieveUpcomingDegradations(OffsetDateTime, Duration) Degradation[]
     }
 
+    Degradation *-- Metadata
     Degradation ..|> HasDuration
     Degradation ..|> State
     Degradation ..|> HasEstimatedSolutionTime

@@ -1,5 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",
-    "maven.view": "hierarchical"
+    "maven.view": "hierarchical",
+    "cSpell.words": [
+        "undelete"
+    ]
 }
