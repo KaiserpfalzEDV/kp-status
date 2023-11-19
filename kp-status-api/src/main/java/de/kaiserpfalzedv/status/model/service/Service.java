@@ -17,12 +17,16 @@
  */
 package de.kaiserpfalzedv.status.model.service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.status.model.HasMetadata;
 import de.kaiserpfalzedv.status.model.Metadata;
+import de.kaiserpfalzedv.status.model.state.HasState;
+import de.kaiserpfalzedv.status.model.state.State;
+import de.kaiserpfalzedv.status.model.state.Up;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +49,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Service implements HasMetadata {
+public class Service implements HasMetadata, HasState {
     /** The metadata of this service. */
     @NotNull
     @EqualsAndHashCode.Include
@@ -62,26 +66,30 @@ public class Service implements HasMetadata {
 
     /** The current service state. */
     @ToString.Include
-    private final ServiceState state;
+    private final State state;
 
 
-    /**
-     * Checks if this service or any service it depends on or is composed of is down.
-     * 
-     * @return true, if the service or any dependency is down.
-     */
-    public boolean isDown() {
-        return state.isDown() 
-                || subServices.stream().anyMatch(Service::isDown)
-                || dependencies.stream().anyMatch(Service::isDown);
+    public void fail(@NotNull final Degradation degradation) {
+        state.fail(degradation);
     }
 
-    public Service fail(final Degradation degradation) {
-        return toBuilder().fail(degradation).build();
+    public void recover(@NotNull final Degradation degradation) {
+        state.recover(degradation);
     }
 
-    public Service recover() {
-        return toBuilder().recover().build();
+    @Override
+    public boolean isServiceDown() {
+        return state.isDown();
+    }
+
+    @Override
+    public boolean isSubServiceDown() {
+        return state.isSubServiceDown();
+    }
+
+    @Override
+    public boolean isDependencyDown() {
+        return state.isDependencyDown();
     }
 
     public Service addSubService(final Service subService) {
@@ -103,7 +111,9 @@ public class Service implements HasMetadata {
      */
     public static class ServiceBuilder {
         private Metadata metadata = Metadata.builder().build();
-        private ServiceState state = ServiceStateUp.builder().build();
+        private State state = Up.builder().build();
+        private HashSet<Service> subServices = new HashSet<>();
+        private HashSet<Service> dependencies = new HashSet<>();
 
         public ServiceBuilder metadata(@NotNull final Metadata metadata) {
             this.metadata = metadata;
@@ -130,8 +140,34 @@ public class Service implements HasMetadata {
             return this;
         }
 
-        public ServiceBuilder recover() {
-            state = state.recover();
+        public ServiceBuilder recover(@NotNull Degradation degradation) {
+            state = state.recover(degradation);
+            return this;
+        }
+
+        public ServiceBuilder subServices(@NotNull final Collection<? extends Service> services) {
+            this.subServices.clear();
+            this.subServices.addAll(services);
+            this.dependencies.removeAll(services);
+            return this;
+        }
+
+        public ServiceBuilder addSubService(@NotNull final Service service) {
+            this.subServices.add(service);
+            this.dependencies.remove(service);
+            return this;
+        }
+
+        public ServiceBuilder dependencies(@NotNull final Collection<? extends Service> services) {
+            this.dependencies.clear();
+            services.removeAll(subServices);
+            this.dependencies.addAll(services);
+            return this;
+        }
+
+        public ServiceBuilder addDependency(@NotNull final Service service) {
+            if (!this.subServices.contains(service))
+                this.dependencies.add(service);
             return this;
         }
 

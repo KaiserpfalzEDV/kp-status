@@ -15,19 +15,20 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
-
-import de.kaiserpfalzedv.status.model.HasDuration;
-import jakarta.validation.constraints.NotNull;
+package de.kaiserpfalzedv.status.model.state;
 
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-11-12
+ * @since 2023-11-19
  */
-public interface ServiceState extends HasDuration {
-    public boolean isDown();
-    public ServiceState fail(@NotNull final Degradation degradation);
-    public ServiceState recover();
+public interface HasState {
+    default boolean isDown() {
+        return isServiceDown() || isSubServiceDown() || isDependencyDown();
+    }
+
+    public boolean isServiceDown();
+    public boolean isSubServiceDown();
+    public boolean isDependencyDown();
 }

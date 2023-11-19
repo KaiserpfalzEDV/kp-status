@@ -15,17 +15,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
+package de.kaiserpfalzedv.status.model.state;
 
+import java.util.Set;
 
-
+import de.kaiserpfalzedv.status.model.HasDuration;
+import de.kaiserpfalzedv.status.model.service.Degradation;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
-
 
 /**
  * 
@@ -33,26 +29,9 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0.0
  * @since 2023-11-12
  */
-@Jacksonized
-@SuperBuilder(toBuilder = true)
-@Getter
-@ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
-@Slf4j
-public class ServiceStateDown extends ServiceStateBase {
-    @Override
-    public boolean isDown() {
-        return true;
-    }
-
-    @Override
-    public ServiceState fail(@NotNull final Degradation degradation) {
-        log.debug("Service is already down. No change. Ignoring degradation: {}", degradation);
-        return this;
-    }
-
-    @Override
-    public ServiceState recover() {
-        log.debug("Service state is recovering.");
-        return ServiceStateUp.builder().build();
-    }    
+public interface State extends HasDuration, HasState {
+    public Set<Degradation> getDegradation();
+    
+    public State fail(@NotNull final Degradation degradation);
+    public State recover(@NotNull final Degradation degradation);
 }

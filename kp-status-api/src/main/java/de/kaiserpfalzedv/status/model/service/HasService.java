@@ -17,9 +17,7 @@
  */
 package de.kaiserpfalzedv.status.model.service;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
+import de.kaiserpfalzedv.status.model.state.State;
 
 /**
  * 
@@ -27,21 +25,18 @@ import org.junit.jupiter.api.Test;
  * @version 1.0.0
  * @since 2023-11-12
  */
-public class DegradedSubServiceTest {
-    private static final Service SUBSERVICE =Service.builder()
-            .fail(Degradation.builder()
-                    .description("failure").build())
-            .build();
-    private static final Service SERVICE = Service.builder().build().addSubService(SUBSERVICE);
+public interface HasService {
+    public Service getService();
 
-
-    @Test
-    public void shouldBeDownWhenASubServiceIsDown() {
-        assert SERVICE.getState().isServiceDown() == false;
-        
-        assertTrue(SERVICE.isDown());
-        assertTrue(SERVICE.getState().isSubServiceDown());
+    default String getServiceName() {
+        return getService().getName();
     }
 
+    default boolean isDown() {
+        return getServiceState().isDown();
+    }
 
+    default State getServiceState() {
+        return getService().getState();
+    }
 }

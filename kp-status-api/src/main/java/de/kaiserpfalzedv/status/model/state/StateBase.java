@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
+package de.kaiserpfalzedv.status.model.state;
 
 
 
@@ -24,9 +24,9 @@ import java.time.ZoneOffset;
 import java.util.Optional;
 
 import ch.qos.logback.core.util.Duration;
+import de.kaiserpfalzedv.status.model.service.Service;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder.Default;
 import lombok.Getter;
@@ -44,7 +44,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
-public abstract class ServiceStateBase implements ServiceState {
+public abstract class StateBase implements State {
     @ToString.Include
     @Default
     @NotNull
@@ -54,9 +54,9 @@ public abstract class ServiceStateBase implements ServiceState {
     private final OffsetDateTime end;
 
     @ToString.Include
-    @Getter(AccessLevel.PROTECTED)
-    @Nullable
-    private final Degradation degradation;
+    @NotNull
+    private final Service service;
+
 
     @Override
     public Optional<OffsetDateTime> getEnd() {
@@ -69,5 +69,15 @@ public abstract class ServiceStateBase implements ServiceState {
 
         long millis = current.toInstant().toEpochMilli() - start.toInstant().toEpochMilli();
         return Duration.buildByMilliseconds(millis);
+    }
+
+    @Override
+    public boolean isSubServiceDown() {
+        return service.getSubServices().stream().anyMatch(s -> s.isDown());
+    }
+
+    @Override
+    public boolean isDependencyDown() {
+        return service.getDependencies().stream().anyMatch(s -> s.isDown());
     }
 }

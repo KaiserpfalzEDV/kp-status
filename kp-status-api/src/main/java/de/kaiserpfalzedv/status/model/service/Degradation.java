@@ -22,6 +22,7 @@ package de.kaiserpfalzedv.status.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.kaiserpfalzedv.status.model.HasMetadata;
 import de.kaiserpfalzedv.status.model.Metadata;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -45,7 +46,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Degradation {
+public class Degradation implements HasMetadata, HasService {
     @EqualsAndHashCode.Include
     @ToString.Include
     private final Metadata metadata;

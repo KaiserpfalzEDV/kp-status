@@ -15,14 +15,15 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
+package de.kaiserpfalzedv.status.model.ola;
 
 
 
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,25 +35,12 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2023-11-12
  */
 @Jacksonized
-@SuperBuilder(toBuilder = true)
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Getter
-@ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
+@ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Slf4j
-public class ServiceStateUp extends ServiceStateBase {
-    @Override
-    public boolean isDown() {
-        return false;
-    }
-
-    @Override
-    public ServiceState fail(@NotNull final Degradation degradation) {
-        log.debug("Service state is transitioning to failing. Degradation is: {}", degradation);
-        return ServiceStateDown.builder().degradation(degradation).build();
-    }
-
-    @Override
-    public ServiceState recover() {
-        log.debug("Service is already up. No change.");
-        return this;
-    }    
+public class OperationLevelAgreement {
+    
 }
