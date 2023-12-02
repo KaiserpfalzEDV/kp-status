@@ -28,6 +28,7 @@ classDiagram
 
     Service *-- Metadata
     Service ..|> Identifiable
+    Service ..|> HasDuration
     Service --o Service : subServices
     Service --o Service : dependencies
     Service o-- ServiceState
@@ -39,7 +40,6 @@ classDiagram
         -Service[] dependencies
         +getSubServices() Service[]
         +getDependencies() Service[]
-        +getLastTransition() OffsetDateTime
         +getState() State
         +getOperationalLevelAgreements() OperationalLevelAgreement[]
         +history() ServiceState[]
@@ -204,22 +204,17 @@ classDiagram
     Identifiable --> HasName
 
     class HasId {
-        -UUID id
         +getId() UUID
         +getDisplayId() String
     }
 
     class HasName {
-        -String name
         +getName() String
         +getDisplayName() String
    }
 
     class HasDuration {
-        -OffsetDateTime start
-        -Duration duration
         +getStart() OffsetDateTime
-        +getEnd() OffsetDateTime
         +getDuration() Duration
     }
 {{< /mermaid >}}

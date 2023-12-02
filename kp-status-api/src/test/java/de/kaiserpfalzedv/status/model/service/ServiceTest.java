@@ -21,11 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
 import de.kaiserpfalzedv.status.model.Metadata;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -33,8 +36,12 @@ import de.kaiserpfalzedv.status.model.Metadata;
  * @version 1.0.0
  * @since 2023-11-12
  */
+@Slf4j
 public class ServiceTest {
-    private final Service DEFAULT = Service.builder().build();
+    private final OffsetDateTime DEFAULT_START = OffsetDateTime.now();
+    private final Service DEFAULT = Service.builder()
+            .build()
+        .initState();
 
 
     @Test
@@ -114,5 +121,15 @@ public class ServiceTest {
         assert result != null;
 
         assertFalse(result.isDeleted());
+    }
+
+    @Test
+    public void shouldReturnTheCorrectDuration() {
+        final OffsetDateTime post = OffsetDateTime.now();
+
+        final Duration result = DEFAULT.getDuration();
+        log.trace("Duration of current state: {}", result);
+
+        assertEquals(-1, Duration.between(post, DEFAULT_START).compareTo(result));
     }
 }

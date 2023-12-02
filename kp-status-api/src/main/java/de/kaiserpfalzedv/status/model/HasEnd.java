@@ -17,17 +17,18 @@
  */
 package de.kaiserpfalzedv.status.model;
 
-import java.time.Duration;
+
+
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-11-12
+ * @since 2023-12-02
  */
-public interface HasDuration {
-    public OffsetDateTime getStart();
-    public Duration getDuration();
+public interface HasEnd {
+    public Optional<OffsetDateTime> getEnd();
 }

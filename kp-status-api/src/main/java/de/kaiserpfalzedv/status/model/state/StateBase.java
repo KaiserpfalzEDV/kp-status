@@ -19,13 +19,11 @@ package de.kaiserpfalzedv.status.model.state;
 
 
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Optional;
 
-import ch.qos.logback.core.util.Duration;
 import de.kaiserpfalzedv.status.model.service.Service;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder.Default;
@@ -53,25 +51,16 @@ public abstract class StateBase implements State {
     private final OffsetDateTime start = OffsetDateTime.now(ZoneOffset.UTC);
 
     @ToString.Include
-    @Nullable
-    private final OffsetDateTime end;
-
-    @ToString.Include
     @NotNull
+    @NonNull
     private Service service;
 
 
     @Override
-    public Optional<OffsetDateTime> getEnd() {
-        return Optional.ofNullable(end);
-    }
-
-    @Override
     public Duration getDuration() {
-        final OffsetDateTime current = end != null ? end : OffsetDateTime.now(ZoneOffset.UTC);
+        final OffsetDateTime current = OffsetDateTime.now(ZoneOffset.UTC);
 
-        long millis = current.toInstant().toEpochMilli() - start.toInstant().toEpochMilli();
-        return Duration.buildByMilliseconds(millis);
+        return Duration.between(start, current);
     }
 
     @Override

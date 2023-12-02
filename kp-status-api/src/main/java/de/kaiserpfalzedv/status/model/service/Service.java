@@ -17,11 +17,14 @@
  */
 package de.kaiserpfalzedv.status.model.service;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.status.model.HasDuration;
 import de.kaiserpfalzedv.status.model.HasMetadata;
 import de.kaiserpfalzedv.status.model.Metadata;
 import de.kaiserpfalzedv.status.model.state.HasState;
@@ -50,7 +53,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Service implements HasMetadata, HasState {
+public class Service implements HasMetadata, HasState, HasDuration {
     /** The metadata of this service. */
     @NotNull
     @EqualsAndHashCode.Include
@@ -119,6 +122,28 @@ public class Service implements HasMetadata, HasState {
 
         return this;
     }
+
+
+    /**
+     * The last state change.
+     * 
+     * @return The time of the last state change.
+     */
+    @Override
+    public OffsetDateTime getStart() {
+        return state.getStart();
+    }
+
+    /**
+     * The duration since last state change.
+     * 
+     * @return The duration since the last state change.
+     */
+    @Override
+    public Duration getDuration() {
+        return state.getDuration();
+    }
+
 
     /** 
      * The builder that will be augmented by lombok.

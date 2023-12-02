@@ -17,6 +17,7 @@
  */
 package de.kaiserpfalzedv.status.model.service;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -45,8 +46,8 @@ public class DegradedSubServiceTest {
         assert SERVICE.getState().isServiceDown() == false;
         
         assertTrue(SERVICE.isDown());
-        assertTrue(SERVICE.getState().isSubServiceDown());
+        assertFalse(SERVICE.isDependencyDown());
+        assertFalse(SERVICE.isServiceDown());
+        assertTrue(SERVICE.isSubServiceDown());
     }
-
-
 }
