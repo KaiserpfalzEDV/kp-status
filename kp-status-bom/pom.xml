@@ -35,7 +35,7 @@
         <kp-status.groupId>de.kaiserpfalz-edv.status</kp-status.groupId>
         <kp-status.version>0.1.0</kp-status.version>
 
-        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
 
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
     </properties>
