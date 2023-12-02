@@ -33,6 +33,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
@@ -66,52 +67,66 @@ public class Service implements HasMetadata, HasState {
 
     /** The current service state. */
     @ToString.Include
-    private final State state;
+    @Setter
+    private State state;
 
 
-    public void fail(@NotNull final Degradation degradation) {
-        state.fail(degradation);
+    public Service fail(@NotNull final Degradation degradation) {
+        state = state.fail(degradation);
+        return this;
     }
 
-    public void recover(@NotNull final Degradation degradation) {
-        state.recover(degradation);
+    public Service recover(@NotNull final Degradation degradation) {
+        state = state.recover(degradation);
+        return this;
     }
+
+    public Service initState() {
+        state = Up.builder()
+                .service(this)
+                .build();
+
+        return this;
+    }
+
+
 
     @Override
     public boolean isServiceDown() {
-        return state.isDown();
+        return ! (state instanceof Up);
     }
 
     @Override
     public boolean isSubServiceDown() {
-        return state.isSubServiceDown();
+        return subServices.stream()
+            .anyMatch(s -> { return s.isDown(); });
     }
 
     @Override
     public boolean isDependencyDown() {
-        return state.isDependencyDown();
+        return dependencies.stream()
+            .anyMatch(s -> { return s.isDown(); });
     }
 
     public Service addSubService(final Service subService) {
-        Set<Service> subservices = new HashSet<>(getSubServices());
-        subservices.add(subService);
+        subServices.add(subService);
 
-        return toBuilder().subServices(subservices).build();
+        return this;
     }
 
     public Service addDependencies(final Service dependency) {
-        Set<Service> dependencies = new HashSet<>(getDependencies());
         dependencies.add(dependency);
 
-        return toBuilder().dependencies(dependencies).build();
+        return this;
     }
 
     /** 
      * The builder that will be augmented by lombok.
      */
     public static class ServiceBuilder {
-        private Metadata metadata = Metadata.builder().build();
-        private State state = Up.builder().build();
+        private Metadata metadata = Metadata.builder()
+                .build();
+        private State state;
         private HashSet<Service> subServices = new HashSet<>();
         private HashSet<Service> dependencies = new HashSet<>();
 

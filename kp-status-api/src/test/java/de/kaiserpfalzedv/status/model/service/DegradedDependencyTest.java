@@ -28,16 +28,18 @@ import org.junit.jupiter.api.Test;
  * @since 2023-11-12
  */
 public class DegradedDependencyTest {
-    private static final Service SUBSERVICE =Service.builder()
-            .fail(Degradation.builder()
-                    .description("failure").build())
-            .build();
-    private static final Service SERVICE = Service.builder().build().addDependencies(SUBSERVICE);
+    private static final Service DEPENDENCY = Service.builder().build()
+        .initState()
+        .fail(Degradation.builder().description("failure").build())
+        ;
+    private static final Service SERVICE = Service.builder().build()
+        .initState()
+        .addDependencies(DEPENDENCY);
 
 
     @Test
     public void shouldBeDownWhenADependencyIsDown() {
-        assert SERVICE.getState().isDown() == false;
+        assert SERVICE.getState().isServiceDown() == false;
         
         assertTrue(SERVICE.isDown());
     }

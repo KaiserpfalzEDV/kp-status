@@ -29,10 +29,15 @@ import org.junit.jupiter.api.Test;
  */
 public class DegradedSubServiceTest {
     private static final Service SUBSERVICE =Service.builder()
-            .fail(Degradation.builder()
-                    .description("failure").build())
-            .build();
-    private static final Service SERVICE = Service.builder().build().addSubService(SUBSERVICE);
+            .build()
+        .initState()
+        .fail(Degradation.builder()
+                .description("failure").build())
+        ;
+    private static final Service SERVICE = Service.builder()
+            .build()
+        .initState()
+        .addSubService(SUBSERVICE);
 
 
     @Test

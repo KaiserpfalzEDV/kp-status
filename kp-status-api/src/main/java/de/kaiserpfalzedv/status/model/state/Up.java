@@ -21,6 +21,7 @@ package de.kaiserpfalzedv.status.model.state;
 import java.util.Set;
 
 import de.kaiserpfalzedv.status.model.service.Degradation;
+import de.kaiserpfalzedv.status.model.service.Service;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
@@ -69,5 +70,9 @@ public class Up extends StateBase {
     public State recover(@NotNull final Degradation degradation) {
         log.debug("Service is already up. No change.");
         return this;
+    }
+
+    public State initService(final Service service) {
+        return toBuilder().service(service).build();
     }
 }

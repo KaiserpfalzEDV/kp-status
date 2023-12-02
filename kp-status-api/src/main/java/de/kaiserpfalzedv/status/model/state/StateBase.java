@@ -30,6 +30,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder.Default;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -48,14 +49,16 @@ public abstract class StateBase implements State {
     @ToString.Include
     @Default
     @NotNull
+    @NonNull
     private final OffsetDateTime start = OffsetDateTime.now(ZoneOffset.UTC);
+
     @ToString.Include
     @Nullable
     private final OffsetDateTime end;
 
     @ToString.Include
     @NotNull
-    private final Service service;
+    private Service service;
 
 
     @Override
