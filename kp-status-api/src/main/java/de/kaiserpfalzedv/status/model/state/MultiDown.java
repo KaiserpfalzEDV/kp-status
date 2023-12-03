@@ -22,7 +22,7 @@ package de.kaiserpfalzedv.status.model.state;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.kaiserpfalzedv.status.model.service.Degradation;
+import de.kaiserpfalzedv.status.degradation.Degradation;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
 @Slf4j
-public class MultiDown extends StateBase {
+public class MultiDown extends Down {
     @NotNull @NotEmpty
     @Getter(AccessLevel.NONE)
     private final HashSet<Degradation> degradations;

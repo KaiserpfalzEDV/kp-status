@@ -312,6 +312,29 @@
                         <skip>${skip.site}</skip>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>dev.aspectj</groupId>
+                    <artifactId>aspectj-maven-plugin</artifactId>
+                    <version>1.13.1</version>
+                    <!-- configuration and executions -->
+                    <configuration>
+                        <complianceLevel>${maven.compiler.target}</complianceLevel>
+                        <aspectLibraries>
+                            <aspectLibrary>
+                                <groupId>org.springframework</groupId>
+                                <artifactId>spring-aspects</artifactId>
+                            </aspectLibrary>
+                        </aspectLibraries>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -473,6 +496,13 @@
                     <artifactId>opentracing-api</artifactId>
                     <scope>runtime</scope>
                 </dependency>
+
+
+                <!-- Aspect Oriented Development -->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aspects</artifactId>
+                </dependency>
             </dependencies>
 
             <build>
@@ -488,6 +518,10 @@
                     <plugin>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>dev.aspectj</groupId>
+                        <artifactId>aspectj-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>

@@ -22,7 +22,7 @@ package de.kaiserpfalzedv.status.model.state;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.kaiserpfalzedv.status.model.service.Degradation;
+import de.kaiserpfalzedv.status.degradation.Degradation;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;

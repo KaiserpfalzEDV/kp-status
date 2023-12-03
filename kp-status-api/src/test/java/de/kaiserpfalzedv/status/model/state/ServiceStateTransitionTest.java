@@ -26,8 +26,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import de.kaiserpfalzedv.status.degradation.Degradation;
 import de.kaiserpfalzedv.status.model.Metadata;
-import de.kaiserpfalzedv.status.model.service.Degradation;
 import de.kaiserpfalzedv.status.model.service.Service;
 
 /**

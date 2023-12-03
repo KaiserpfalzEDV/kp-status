@@ -309,6 +309,38 @@
                         <skip>${skip.site}</skip>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>dev.aspectj</groupId>
+                    <artifactId>aspectj-maven-plugin</artifactId>
+                    <version>1.13.1</version>
+                    <!-- configuration and executions -->
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <proc>none</proc>
+                        <complianceLevel>${java.version}</complianceLevel>
+                        <showWeaveInfo>true</showWeaveInfo>
+                        <forceAjcCompile>true</forceAjcCompile>
+                        <sources/>
+                        <weaveDirectories>
+                            <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+                        </weaveDirectories>
+                        <aspectLibraries>
+                            <aspectLibrary>
+                                <groupId>org.springframework</groupId>
+                                <artifactId>spring-aspects</artifactId>
+                            </aspectLibrary>
+                        </aspectLibraries>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -383,6 +415,12 @@
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-cache</artifactId>
+                </dependency>
+
+                <!-- Transaction Management -->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
                 </dependency>
 
                 <!-- openapi/swagger -->
@@ -471,6 +509,17 @@
                     <artifactId>opentracing-api</artifactId>
                     <scope>runtime</scope>
                 </dependency>
+
+                <!-- Aspect Oriented Development -->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aspects</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjrt</artifactId>
+                    <version>1.9.8.RC1</version>
+                </dependency>
             </dependencies>
 
             <build>
@@ -486,6 +535,10 @@
                     <plugin>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>dev.aspectj</groupId>
+                        <artifactId>aspectj-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -510,6 +563,13 @@
                 <dependency>
                     <groupId>org.junit.jupiter</groupId>
                     <artifactId>junit-jupiter</artifactId>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                    <version>1.4.14</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>

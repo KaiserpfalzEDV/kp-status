@@ -15,23 +15,20 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.state;
+package de.kaiserpfalzedv.status;
 
-import java.util.Set;
 
-import de.kaiserpfalzedv.status.degradation.Degradation;
-import de.kaiserpfalzedv.status.model.HasDuration;
-import jakarta.validation.constraints.NotNull;
+
+import org.springframework.context.annotation.ComponentScan;
+
 
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-11-12
+ * @since 2023-12-03
  */
-public interface State extends HasDuration, HasState {
-    public Set<Degradation> getDegradation();
+@ComponentScan
+public class AspectJScan {
     
-    public State fail(@NotNull final Degradation degradation);
-    public State recover(@NotNull final Degradation degradation);
 }
