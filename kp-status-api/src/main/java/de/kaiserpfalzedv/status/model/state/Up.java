@@ -58,8 +58,6 @@ public class Up extends StateBase {
     public State fail(@NotNull final Degradation degradation) {
         log.debug("Service state is transitioning to failing. Degradation is: {}", degradation);
 
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
-
         return Down.builder()
                 .service(getService())
                 .degradation(degradation)

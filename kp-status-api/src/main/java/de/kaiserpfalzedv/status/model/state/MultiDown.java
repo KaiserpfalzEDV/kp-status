@@ -62,14 +62,12 @@ public class MultiDown extends Down {
     @Override
     public State fail(@NotNull final Degradation degradation) {
         if (getDegradation().contains(degradation)) {
-            log.warn("Degradatation is already known. state={}, degradation={}", this, degradation);
+            log.warn("Degradation is already known. state={}, degradation={}", this, degradation);
             return this;
         }
 
         HashSet<Degradation> all = new HashSet<>(getDegradation());
         all.add(degradation);
-
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
 
         return MultiDown.builder()
             .service(getService())
@@ -83,8 +81,6 @@ public class MultiDown extends Down {
             log.warn("Degradation is not known. state={}, degradation={}", this, degradation);
             return this;
         }
-
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
 
         HashSet<Degradation> all = new HashSet<>(degradations);
         all.remove(degradation);

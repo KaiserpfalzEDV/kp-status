@@ -338,6 +338,7 @@
                             <goals>
                                 <goal>compile</goal>
                             </goals>
+                            <phase>post-compile</phase>
                         </execution>
                     </executions>
                 </plugin>
