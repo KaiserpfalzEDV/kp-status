@@ -82,16 +82,20 @@ public class ServiceCommunicationTest {
     @Test
     public void shouldSendAndEventWhenServiceRecovers() {
         BusListener listener = new BusListener(bus);
-        DEFAULT.init();
-
+        
         final String degregationReason = UUID.randomUUID().toString();
 
-        DEFAULT.recover(
+        DEFAULT.init()
+        .fail(
             Degradation.builder()
                 .description(degregationReason)
                 .service(DEFAULT)
                 .build()
         );
+
+        Degradation degradation = DEFAULT.getState().getDegradation().stream().findFirst().orElseThrow(IllegalStateException::new);
+
+        DEFAULT.recover(degradation);
 
         listener.close();
         DEFAULT.close();

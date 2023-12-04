@@ -65,8 +65,6 @@ public class Down extends StateBase {
             return this;
         }
 
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
-
         return MultiDown.builder()
                 .service(getService())
                 .degradations(new HashSet<>(Set.of(this.degradation, degradation)))
@@ -79,8 +77,6 @@ public class Down extends StateBase {
             log.warn("Degradation is not known. state={}, degradation={}", this, degradation);
             return this;
         }
-
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
 
         log.debug("Service state is recovering.");
         return Up.builder()
