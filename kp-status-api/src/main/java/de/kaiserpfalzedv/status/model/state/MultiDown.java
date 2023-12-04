@@ -22,7 +22,7 @@ package de.kaiserpfalzedv.status.model.state;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.kaiserpfalzedv.status.model.service.Degradation;
+import de.kaiserpfalzedv.status.degradation.Degradation;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
 @Slf4j
-public class MultiDown extends StateBase {
+public class MultiDown extends Down {
     @NotNull @NotEmpty
     @Getter(AccessLevel.NONE)
     private final HashSet<Degradation> degradations;
@@ -62,14 +62,12 @@ public class MultiDown extends StateBase {
     @Override
     public State fail(@NotNull final Degradation degradation) {
         if (getDegradation().contains(degradation)) {
-            log.warn("Degradatation is already known. state={}, degradation={}", this, degradation);
+            log.warn("Degradation is already known. state={}, degradation={}", this, degradation);
             return this;
         }
 
         HashSet<Degradation> all = new HashSet<>(getDegradation());
         all.add(degradation);
-
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
 
         return MultiDown.builder()
             .service(getService())
@@ -83,8 +81,6 @@ public class MultiDown extends StateBase {
             log.warn("Degradation is not known. state={}, degradation={}", this, degradation);
             return this;
         }
-
-        // TODO 2023-11-19 klenkes74 Add notification of change state via bus.
 
         HashSet<Degradation> all = new HashSet<>(degradations);
         all.remove(degradation);

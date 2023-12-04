@@ -15,37 +15,39 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
+package de.kaiserpfalzedv.status;
 
 
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import lombok.Builder.Default;
-import lombok.extern.jackson.Jacksonized;
+import com.google.common.eventbus.EventBus;
+
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-11-12
+ * @since 2023-12-03
  */
-@Jacksonized
-@AllArgsConstructor
-@Builder(toBuilder = true)
-@Getter
-@ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DegradationHistory {
-    @Default
-    private final OffsetDateTime timestamp = OffsetDateTime.now(ZoneOffset.UTC);
-    
-    private final String description;
+@Configuration
+@Slf4j
+public class CommunicationBusConfiguration {
+    private EventBus applicationEventBus;
+
+    @PostConstruct
+    public void init() {
+        applicationEventBus = new EventBus("application");
+
+        log.debug("Created application event bus. bus={}", applicationEventBus);
+    }
+
+    @Bean
+    public EventBus applicationEventBus() {
+        return applicationEventBus;
+    }
 }

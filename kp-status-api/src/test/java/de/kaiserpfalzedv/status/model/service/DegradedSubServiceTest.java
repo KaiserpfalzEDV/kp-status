@@ -22,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.google.common.eventbus.EventBus;
+
+import de.kaiserpfalzedv.status.degradation.Degradation;
+
 /**
  * 
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -29,16 +33,22 @@ import org.junit.jupiter.api.Test;
  * @since 2023-11-12
  */
 public class DegradedSubServiceTest {
+    private static final EventBus bus = new EventBus("TEST");
+
     private static final Service SUBSERVICE =Service.builder()
+            .bus(bus)
             .build()
         .initState()
         .fail(Degradation.builder()
                 .description("failure").build())
-        ;
-    private static final Service SERVICE = Service.builder()
+        .init();
+
+        private static final Service SERVICE = Service.builder()
+            .bus(bus)
             .build()
         .initState()
-        .addSubService(SUBSERVICE);
+        .addSubService(SUBSERVICE)
+        .init();
 
 
     @Test

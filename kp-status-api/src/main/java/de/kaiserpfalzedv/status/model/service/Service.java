@@ -24,13 +24,23 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.eventbus.EventBus;
+
+import de.kaiserpfalzedv.status.degradation.Degradation;
 import de.kaiserpfalzedv.status.model.HasDuration;
 import de.kaiserpfalzedv.status.model.HasMetadata;
 import de.kaiserpfalzedv.status.model.Metadata;
 import de.kaiserpfalzedv.status.model.state.HasState;
 import de.kaiserpfalzedv.status.model.state.State;
 import de.kaiserpfalzedv.status.model.state.Up;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -47,13 +57,14 @@ import lombok.extern.jackson.Jacksonized;
  * @version 1.0.0
  * @since 2023-11-12
  */
+@Configurable
 @Jacksonized
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Service implements HasMetadata, HasState, HasDuration {
+public class Service implements HasMetadata, HasState, HasDuration, AutoCloseable {
     /** The metadata of this service. */
     @NotNull
     @EqualsAndHashCode.Include
@@ -74,13 +85,36 @@ public class Service implements HasMetadata, HasState, HasDuration {
     private State state;
 
 
+    /** The communication bus */
+    @Autowired
+    @JsonIgnore
+    @Setter
+    @Getter(AccessLevel.NONE)
+    private EventBus bus;
+
+    
+    @PostConstruct
+    public Service init() {
+        bus.register(this);
+        return this;
+    }
+
+    @PreDestroy
+    @Override
+    public void close() {
+        bus.unregister(this);
+    }
+
+
     public Service fail(@NotNull final Degradation degradation) {
         state = state.fail(degradation);
+        bus.post(state);
         return this;
     }
 
     public Service recover(@NotNull final Degradation degradation) {
         state = state.recover(degradation);
+        bus.post(state);
         return this;
     }
 
@@ -88,7 +122,7 @@ public class Service implements HasMetadata, HasState, HasDuration {
         state = Up.builder()
                 .service(this)
                 .build();
-
+        bus.post(state);
         return this;
     }
 
@@ -154,6 +188,7 @@ public class Service implements HasMetadata, HasState, HasDuration {
         private State state;
         private HashSet<Service> subServices = new HashSet<>();
         private HashSet<Service> dependencies = new HashSet<>();
+        private EventBus bus;
 
         public ServiceBuilder metadata(@NotNull final Metadata metadata) {
             this.metadata = metadata;
@@ -218,6 +253,11 @@ public class Service implements HasMetadata, HasState, HasDuration {
 
         public ServiceBuilder undelete() {
             metadata = metadata.toBuilder().undelete().build();
+            return this;
+        }
+
+        public ServiceBuilder bus(EventBus bus) {
+            this.bus = bus;
             return this;
         }
     }

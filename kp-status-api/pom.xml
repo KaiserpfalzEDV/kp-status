@@ -29,4 +29,10 @@
     <artifactId>kp-status-api</artifactId>
     <name>KP Status :: Core :: API</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+    </dependencies>
 </project>

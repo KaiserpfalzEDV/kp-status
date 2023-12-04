@@ -15,16 +15,13 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.model.service;
+package de.kaiserpfalzedv.status.degradation;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
-import de.kaiserpfalzedv.status.model.HasMetadata;
-import de.kaiserpfalzedv.status.model.Metadata;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -46,26 +43,9 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Degradation implements HasMetadata, HasService {
-    @EqualsAndHashCode.Include
-    @ToString.Include
-    private final Metadata metadata;
-
-    private final Service service;
-
-    private final String description;
-
+public class DegradationHistory {
     @Default
-    private final List<DegradationHistory> history = new ArrayList<>();
-
-
-    public Degradation addNote(@NotEmpty final String note) {
-        DegradationHistory entry = DegradationHistory.builder()
-                .description(note)
-                .build();
-        List<DegradationHistory> entries = new ArrayList<>(history);
-        entries.add(entry);
-
-        return toBuilder().history(entries).build();
-    }
+    private final OffsetDateTime timestamp = OffsetDateTime.now(ZoneOffset.UTC);
+    
+    private final String description;
 }
