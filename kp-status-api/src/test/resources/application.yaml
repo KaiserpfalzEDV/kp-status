@@ -1,0 +1,18 @@
+---
+spring:
+  profiles.active: production
+---
+spring:
+  profiles: production
+  web:
+    resources:
+      add-mappings: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non-empty
+
+server:
+  servlet:
+    encoding:
+      force: true

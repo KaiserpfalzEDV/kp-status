@@ -309,39 +309,6 @@
                         <skip>${skip.site}</skip>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>dev.aspectj</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>1.13.1</version>
-                    <!-- configuration and executions -->
-                    <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                        <proc>none</proc>
-                        <complianceLevel>${java.version}</complianceLevel>
-                        <showWeaveInfo>true</showWeaveInfo>
-                        <forceAjcCompile>true</forceAjcCompile>
-                        <sources/>
-                        <weaveDirectories>
-                            <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
-                        </weaveDirectories>
-                        <aspectLibraries>
-                            <aspectLibrary>
-                                <groupId>org.springframework</groupId>
-                                <artifactId>spring-aspects</artifactId>
-                            </aspectLibrary>
-                        </aspectLibraries>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                            <phase>post-compile</phase>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -510,17 +477,6 @@
                     <artifactId>opentracing-api</artifactId>
                     <scope>runtime</scope>
                 </dependency>
-
-                <!-- Aspect Oriented Development -->
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-aspects</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.aspectj</groupId>
-                    <artifactId>aspectjrt</artifactId>
-                    <version>1.9.8.RC1</version>
-                </dependency>
             </dependencies>
 
             <build>
@@ -536,10 +492,6 @@
                     <plugin>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok-maven-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>dev.aspectj</groupId>
-                        <artifactId>aspectj-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
@@ -711,17 +663,6 @@
         </profile>
 
         <profile>
-            <id>security</id>
-            <activation>
-                <file>
-                    <exists>.profile-security</exists>
-                </file>
-            </activation>
-            <dependencies>
-            </dependencies>
-        </profile>
-
-        <profile>
             <id>rest</id>
             <activation>
                 <file>
@@ -731,7 +672,12 @@
             <dependencies>
                 <!-- REST/Communication -->
                 <!-- Resilience pattern -->
+                
                 <!-- Zalando Problem -->
+                <dependency>
+                    <groupId>org.zalando</groupId>
+                    <artifactId>problem-spring-web</artifactId>
+                </dependency>
 
                 <!-- testing -->
                 <dependency>
@@ -741,8 +687,8 @@
                 </dependency>
 
                 <dependency>
-                    <groupId>com.github.tomakehurst</groupId>
-                    <artifactId>wiremock-jre8</artifactId>
+                    <groupId>org.wiremock</groupId>
+                    <artifactId>wiremock</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -760,8 +706,8 @@
 
                 <!-- testing -->
                 <dependency>
-                    <groupId>com.github.tomakehurst</groupId>
-                    <artifactId>wiremock-jre8</artifactId>
+                    <groupId>org.wiremock</groupId>
+                    <artifactId>wiremock</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -794,8 +740,56 @@
                 </file>
             </activation>
 
+            <properties>
+                <spring-active>true</spring-active>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>spring-test</id>
+            <activation>
+                <file>
+                    <exists>src/test/resources/application.yaml</exists>
+                </file>
+            </activation>
+
+            <properties>
+                <spring-active>true</spring-active>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>spring-config</id>
+            <activation>
+                <property>
+                    <name>spring-active</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
             <dependencies>
+                <!-- Needed for Jackson handling -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </dependency>
+
+                <!-- Everyone needs security -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
             </dependencies>
+
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.zalando</groupId>
+                        <artifactId>problem-spring-web</artifactId>
+                        <version>0.29.1</version>
+                    </dependency>    
+                </dependencies>
+            </dependencyManagement>
 
             <build>
                 <plugins>

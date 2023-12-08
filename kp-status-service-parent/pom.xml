@@ -312,30 +312,6 @@
                         <skip>${skip.site}</skip>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>dev.aspectj</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>1.13.1</version>
-                    <!-- configuration and executions -->
-                    <configuration>
-                        <complianceLevel>${maven.compiler.target}</complianceLevel>
-                        <aspectLibraries>
-                            <aspectLibrary>
-                                <groupId>org.springframework</groupId>
-                                <artifactId>spring-aspects</artifactId>
-                            </aspectLibrary>
-                        </aspectLibraries>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                            <phase>post-compile</phase>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -520,10 +496,6 @@
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok-maven-plugin</artifactId>
                     </plugin>
-                    <plugin>
-                        <groupId>dev.aspectj</groupId>
-                        <artifactId>aspectj-maven-plugin</artifactId>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -667,8 +639,8 @@
                 </dependency>
 
                 <dependency>
-                    <groupId>com.github.tomakehurst</groupId>
-                    <artifactId>wiremock-jre8</artifactId>
+                    <groupId>org.wiremock</groupId>
+                    <artifactId>wiremock</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
