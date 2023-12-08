@@ -3,6 +3,7 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "maven.view": "hierarchical",
     "cSpell.words": [
+        "applicationeventbusevents",
         "undelete"
     ]
 }

@@ -22,18 +22,30 @@ package de.kaiserpfalzedv.status.api.model.degradation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.eventbus.EventBus;
+
 import de.kaiserpfalzedv.status.api.model.HasMetadata;
 import de.kaiserpfalzedv.status.api.model.Metadata;
 import de.kaiserpfalzedv.status.api.model.service.HasService;
 import de.kaiserpfalzedv.status.api.model.service.Service;
+import lombok.NonNull;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.Builder.Default;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -48,19 +60,32 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Degradation implements HasMetadata, HasService {
+@Slf4j
+public class Degradation implements HasMetadata, HasService, AutoCloseable {
     @EqualsAndHashCode.Include
     @ToString.Include
+    @NotNull
+    @NonNull
     private final Metadata metadata;
 
+    @NotNull
+    @NonNull
     private final Service service;
 
+    @NotEmpty
+    @NonNull
     private final String description;
 
     @Default
     private final List<DegradationHistory> history = new ArrayList<>();
 
 
+    /**
+     * Adds a new note to the degregation.
+     * 
+     * @param note the new note that will be added to the history.
+     * @return The degradation itself.
+     */
     public Degradation addNote(@NotEmpty final String note) {
         DegradationHistory entry = DegradationHistory.builder()
                 .description(note)
@@ -69,5 +94,25 @@ public class Degradation implements HasMetadata, HasService {
         entries.add(entry);
 
         return toBuilder().history(entries).build();
+    }
+
+
+    /** The communication bus */
+    @Autowired
+    @JsonIgnore
+    @Setter
+    @Getter(AccessLevel.NONE)
+    private EventBus bus;
+
+    @PostConstruct
+    public Degradation init() {
+        bus.register(this);
+        return this;
+    }
+
+    @PreDestroy
+    @Override
+    public void close() {
+        bus.unregister(this);
     }
 }

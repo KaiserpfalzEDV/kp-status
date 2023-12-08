@@ -15,47 +15,28 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.core.events;
+package de.kaiserpfalzedv.status.api.events.applicationeventbusevents;
 
 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import com.google.common.eventbus.EventBus;
-
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * Provides the event bus to use for communication.
- * 
+ * A listener has registered to the application event bus.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-12-03
+ * @since 2023-12-08
  */
-@Configuration
-@Slf4j
-public class CommunicationBusConfiguration {
-    /** The event bus to use. */
-    private EventBus applicationEventBus;
-
-    /**
-     * Initializes the event bus.
-     */
-    @PostConstruct
-    public void init() {
-        applicationEventBus = new EventBus("application");
-
-        log.debug("Created application event bus. bus={}", applicationEventBus);
-    }
-
-    /**
-     * @return the application event bus of the system.
-     */
-    @Bean
-    public EventBus applicationEventBus() {
-        return applicationEventBus;
-    }
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@Getter
+@ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public class ListenerRegisteredEvent extends ListenerBaseEvent {
 }

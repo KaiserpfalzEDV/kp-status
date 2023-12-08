@@ -29,6 +29,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.Builder.Default;
 import lombok.extern.jackson.Jacksonized;
 
 
@@ -45,16 +46,17 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Metadata {
+public class Metadata implements HasId {
     /** Default namespace if no namespace is set. */
     public static final String DEFAULT_NAMESPACE = "default";
 
 
     /** The ID of the object. */
+    @Default
     @NotNull
     @EqualsAndHashCode.Include
     @ToString.Include
-    private final UUID id;
+    private final UUID id = UUID.randomUUID();
 
     /** The namespace of this object. */
     @NotNull
