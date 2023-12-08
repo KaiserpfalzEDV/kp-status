@@ -31,7 +31,6 @@ import de.kaiserpfalzedv.status.api.model.HasMetadata;
 import de.kaiserpfalzedv.status.api.model.Metadata;
 import de.kaiserpfalzedv.status.api.model.service.HasService;
 import de.kaiserpfalzedv.status.api.model.service.Service;
-import lombok.NonNull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.validation.constraints.NotEmpty;
@@ -39,13 +38,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Builder.Default;
 import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -60,7 +59,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Slf4j
 public class Degradation implements HasMetadata, HasService, AutoCloseable {
     @EqualsAndHashCode.Include
     @ToString.Include
