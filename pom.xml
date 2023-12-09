@@ -37,10 +37,12 @@
         <module>kp-status-bom</module>
 
         <module>kp-status-api</module>
-        <module>kp-status-mock</module>
         <module>kp-status-core</module>
 
+        <module>kp-status-mock</module>
         <module>kp-status-data</module>
+        <module>kp-status-impl</module>
+
         <module>kp-status-service</module>
         <module>kp-status-ui</module>
     </modules>

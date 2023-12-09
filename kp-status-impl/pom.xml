@@ -26,8 +26,8 @@
         <relativePath>../kp-status-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>kp-status-mock</artifactId>
-    <name>KP Status :: Core :: Mock</name>
+    <artifactId>kp-status-impl</artifactId>
+    <name>KP Status :: Core :: Implementation</name>
 
     <dependencies>
       <dependency>
