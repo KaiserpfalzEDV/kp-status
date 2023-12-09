@@ -28,8 +28,8 @@
     <relativePath>../kp-status-parent/pom.xml</relativePath>
   </parent>
 
-  <artifactId>kp-status-core</artifactId>
-  <name>KP Status :: Core :: Implementation</name>
+  <artifactId>kp-status-commons</artifactId>
+  <name>KP Status :: Core :: Commons</name>
 
   <dependencies>
     <dependency>

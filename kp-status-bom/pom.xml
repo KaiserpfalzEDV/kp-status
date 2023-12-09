@@ -53,7 +53,7 @@
 
             <dependency>
                 <groupId>${kp-status.groupId}</groupId>
-                <artifactId>kp-status-core</artifactId>
+                <artifactId>kp-status-commons</artifactId>
                 <version>${kp-status.version}</version>
             </dependency>
             <dependency>
@@ -64,6 +64,11 @@
             <dependency>
                 <groupId>${kp-status.groupId}</groupId>
                 <artifactId>kp-status-api</artifactId>
+                <version>${kp-status.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${kp-status.groupId}</groupId>
+                <artifactId>kp-status-impl</artifactId>
                 <version>${kp-status.version}</version>
             </dependency>
             <dependency>

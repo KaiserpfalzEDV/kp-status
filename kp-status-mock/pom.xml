@@ -32,7 +32,7 @@
     <dependencies>
       <dependency>
         <groupId>de.kaiserpfalz-edv.status</groupId>
-        <artifactId>kp-status-core</artifactId>
+        <artifactId>kp-status-commons</artifactId>
       </dependency>
     </dependencies>
 </project>

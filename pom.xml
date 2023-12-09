@@ -25,7 +25,7 @@
     <version>0.1.0</version>
     <packaging>pom</packaging>
 
-    <name>KP STATUS :: Root</name>
+    <name>KP Status :: Root</name>
     <description>
         This is a service to display state of runtime services. It does not gather information but offers an API to
         import state information about systems. It is inspired by https://cachet.io/.
@@ -37,7 +37,7 @@
         <module>kp-status-bom</module>
 
         <module>kp-status-api</module>
-        <module>kp-status-core</module>
+        <module>kp-status-commons</module>
 
         <module>kp-status-mock</module>
         <module>kp-status-data</module>
