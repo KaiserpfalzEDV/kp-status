@@ -49,5 +49,5 @@ public interface ApplicationEventBus {
      * @param event The event to be sent.
      * @return The application event bus itself.
      */
-    <E extends BaseEvent<?>> ApplicationEventBus post(E event);
+    <E extends ApplicationBusEvent<?>> ApplicationEventBus post(E event);
 }

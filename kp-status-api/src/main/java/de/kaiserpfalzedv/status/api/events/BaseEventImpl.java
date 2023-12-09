@@ -15,39 +15,45 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.kaiserpfalzedv.status.api;
+package de.kaiserpfalzedv.status.api.events;
 
 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import java.util.UUID;
 
-import com.google.common.eventbus.EventBus;
-
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder.Default;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 
 /**
+ * An event base for all events.
  * 
+ * @param <A> The source type of this base event.
+ *
  * @author klenkes74 {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2023-12-03
+ * @since 2023-12-08
  */
-@Configuration
-@Slf4j
-public class CommunicationBusConfiguration {
-    private EventBus applicationEventBus;
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@Getter
+@ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class BaseEventImpl<A> implements ApplicationBusEvent<A> {
+    /** The ID of this event. */
+    @Default
+    @ToString.Include
+    @EqualsAndHashCode.Include
+    private final UUID id = UUID.randomUUID();
 
-    @PostConstruct
-    public void init() {
-        applicationEventBus = new EventBus("application");
-
-        log.debug("Created application event bus. bus={}", applicationEventBus);
-    }
-
-    @Bean
-    public EventBus applicationEventBus() {
-        return applicationEventBus;
-    }
+    /** The source of this event. */
+    @NotNull
+    @NonNull
+    private final A source;
 }

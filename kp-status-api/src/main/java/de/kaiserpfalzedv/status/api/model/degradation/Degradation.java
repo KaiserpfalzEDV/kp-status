@@ -25,8 +25,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.eventbus.EventBus;
 
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
 import de.kaiserpfalzedv.status.api.model.HasMetadata;
 import de.kaiserpfalzedv.status.api.model.Metadata;
 import de.kaiserpfalzedv.status.api.model.service.HasService;
@@ -62,9 +62,8 @@ import lombok.extern.jackson.Jacksonized;
 public class Degradation implements HasMetadata, HasService, AutoCloseable {
     @EqualsAndHashCode.Include
     @ToString.Include
-    @NotNull
-    @NonNull
-    private final Metadata metadata;
+    @Default
+    private final Metadata metadata = Metadata.builder().build();
 
     @NotNull
     @NonNull
@@ -79,7 +78,7 @@ public class Degradation implements HasMetadata, HasService, AutoCloseable {
 
 
     /**
-     * Adds a new note to the degregation.
+     * Adds a new note to the degradation.
      * 
      * @param note the new note that will be added to the history.
      * @return The degradation itself.
@@ -100,7 +99,7 @@ public class Degradation implements HasMetadata, HasService, AutoCloseable {
     @JsonIgnore
     @Setter
     @Getter(AccessLevel.NONE)
-    private EventBus bus;
+    private ApplicationEventBus bus;
 
     @PostConstruct
     public Degradation init() {

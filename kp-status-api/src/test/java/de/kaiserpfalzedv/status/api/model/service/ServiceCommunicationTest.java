@@ -27,13 +27,14 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import de.kaiserpfalzedv.status.api.TestEventBus;
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
+import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
 import de.kaiserpfalzedv.status.api.model.state.Down;
 import de.kaiserpfalzedv.status.api.model.state.State;
 import de.kaiserpfalzedv.status.api.model.state.Up;
-import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ServiceCommunicationTest {
-    private final EventBus bus = new EventBus("TEST");
+    private final ApplicationEventBus bus = new TestEventBus();
 
     private final Service DEFAULT = Service.builder()
             .bus(bus)
@@ -110,13 +111,13 @@ public class ServiceCommunicationTest {
     }
 
     class BusListener implements AutoCloseable {
-        private final EventBus bus;
+        private final ApplicationEventBus bus;
 
         @Getter
         private final List<State> events = new ArrayList<>();
 
 
-        public BusListener(final EventBus bus) {
+        public BusListener(final ApplicationEventBus bus) {
             this.bus = bus;
             this.bus.register(this);
         }

@@ -27,8 +27,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.eventbus.EventBus;
 
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
 import de.kaiserpfalzedv.status.api.model.HasDuration;
 import de.kaiserpfalzedv.status.api.model.HasMetadata;
 import de.kaiserpfalzedv.status.api.model.Metadata;
@@ -45,6 +45,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
@@ -57,14 +58,15 @@ import lombok.extern.jackson.Jacksonized;
  * @since 2023-11-12
  */
 @Jacksonized
-@AllArgsConstructor
 @Builder(toBuilder = true)
+@AllArgsConstructor
 @Getter
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Service implements HasMetadata, HasState, HasDuration, AutoCloseable {
     /** The metadata of this service. */
     @NotNull
+    @NonNull
     @EqualsAndHashCode.Include
     @ToString.Include
     private final Metadata metadata;
@@ -88,7 +90,7 @@ public class Service implements HasMetadata, HasState, HasDuration, AutoCloseabl
     @JsonIgnore
     @Setter
     @Getter(AccessLevel.NONE)
-    private EventBus bus;
+    private ApplicationEventBus bus;
 
     
     @PostConstruct
@@ -186,7 +188,7 @@ public class Service implements HasMetadata, HasState, HasDuration, AutoCloseabl
         private State state;
         private HashSet<Service> subServices = new HashSet<>();
         private HashSet<Service> dependencies = new HashSet<>();
-        private EventBus bus;
+        private ApplicationEventBus bus;
 
         public ServiceBuilder metadata(@NotNull final Metadata metadata) {
             this.metadata = metadata;
@@ -254,7 +256,7 @@ public class Service implements HasMetadata, HasState, HasDuration, AutoCloseabl
             return this;
         }
 
-        public ServiceBuilder bus(EventBus bus) {
+        public ServiceBuilder bus(ApplicationEventBus bus) {
             this.bus = bus;
             return this;
         }

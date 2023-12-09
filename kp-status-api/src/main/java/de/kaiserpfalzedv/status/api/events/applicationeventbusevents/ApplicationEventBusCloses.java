@@ -20,7 +20,7 @@ package de.kaiserpfalzedv.status.api.events.applicationeventbusevents;
 
 
 import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
-import de.kaiserpfalzedv.status.api.events.BaseEvent;
+import de.kaiserpfalzedv.status.api.events.BaseEventImpl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -40,5 +40,5 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @ToString(callSuper = true, onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class ApplicationEventBusCloses extends BaseEvent<ApplicationEventBus> {
+public class ApplicationEventBusCloses extends BaseEventImpl<ApplicationEventBus> {
 }

@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.common.eventbus.EventBus;
-
+import de.kaiserpfalzedv.status.api.TestEventBus;
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
 import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
 
 /**
@@ -33,14 +33,19 @@ import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
  * @since 2023-11-12
  */
 public class DegradedDependencyTest {
-    private static final EventBus bus = new EventBus("TEST");
+    private static final ApplicationEventBus bus = new TestEventBus();
 
     private static final Service DEPENDENCY = Service.builder()
             .bus(bus)
             .build()
-        .initState()
-        .fail(Degradation.builder().description("failure").build())
-        ;
+        .initState();
+    private static final Degradation DEPENDENCY_DEGRADATION = Degradation.builder()
+                .service(DEPENDENCY)
+                .description("failure").build();
+    static {
+        DEPENDENCY.fail(DEPENDENCY_DEGRADATION);
+    }
+
     private static final Service SERVICE = Service.builder()
             .bus(bus)
             .build()

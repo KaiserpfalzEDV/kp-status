@@ -23,6 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import de.kaiserpfalzedv.status.api.TestEventBus;
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
+import de.kaiserpfalzedv.status.api.model.service.Service;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -44,7 +47,15 @@ import lombok.extern.jackson.Jacksonized;
 @ToString(onlyExplicitlyIncluded = true, includeFieldNames = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DegradationHistoryTest {
-    private static final Degradation DEFAULT = Degradation.builder().build();
+    private static final ApplicationEventBus bus = new TestEventBus();
+    private static final Service DEFAULT_SERVICE = Service.builder()
+            .bus(bus)
+            .build();
+    private static final Degradation DEFAULT = Degradation.builder()
+            .bus(bus)
+            .description("default description")
+            .service(DEFAULT_SERVICE)
+            .build();
 
     @Test
     public void shouldAddANoteWhenDegragationExists() {

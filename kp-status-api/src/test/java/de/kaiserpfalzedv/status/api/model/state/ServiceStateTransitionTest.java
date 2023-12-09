@@ -26,6 +26,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import de.kaiserpfalzedv.status.api.TestEventBus;
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
 import de.kaiserpfalzedv.status.api.model.Metadata;
 import de.kaiserpfalzedv.status.api.model.service.Service;
 import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
@@ -37,15 +39,22 @@ import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
  * @since 2023-11-12
  */
 public class ServiceStateTransitionTest {
+    private static final ApplicationEventBus bus = new TestEventBus();
+
     private static final Service SERVICE = Service.builder()
             .metadata(Metadata.builder().build())
+            .bus(bus)
             .build();
     private static final Degradation DEGRADATION = Degradation.builder()
             .metadata(Metadata.builder().build())
+            .service(SERVICE)
+            .bus(bus)
             .description("Leeres Beispiel")
             .build();
     private static final Degradation ANOTHER_DEGRADATION = Degradation.builder()
             .metadata(Metadata.builder().build())
+            .service(SERVICE)
+            .bus(bus)
             .description("Noch ein Beispiel")
             .build();
     private static final State UP = Up.builder()

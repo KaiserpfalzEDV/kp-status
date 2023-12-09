@@ -30,7 +30,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
-import de.kaiserpfalzedv.status.api.events.BaseEvent;
+import de.kaiserpfalzedv.status.api.events.ApplicationBusEvent;
 import de.kaiserpfalzedv.status.api.events.applicationeventbusevents.ApplicationEventBusCloses;
 import de.kaiserpfalzedv.status.api.events.applicationeventbusevents.ListenerRegisteredEvent;
 import de.kaiserpfalzedv.status.api.events.applicationeventbusevents.ListenerUnregisteredEvent;
@@ -97,7 +97,7 @@ public class ApplicationEventBusGuavaImpl implements ApplicationEventBus, Closea
     }
 
     @Override
-    public <E extends BaseEvent<?>> ApplicationEventBus post(E event) {
+    public <E extends ApplicationBusEvent<?>> ApplicationEventBus post(E event) {
         log.debug("Posting event to application event bus: bus={}, event={}", bus, event);
         bus.post(event);
         log.trace("Event has been posted to application event bus: bus={}, event={}", bus, event);

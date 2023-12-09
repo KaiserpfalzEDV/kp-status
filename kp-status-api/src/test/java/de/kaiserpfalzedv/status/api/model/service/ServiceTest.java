@@ -27,8 +27,8 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import com.google.common.eventbus.EventBus;
-
+import de.kaiserpfalzedv.status.api.TestEventBus;
+import de.kaiserpfalzedv.status.api.events.ApplicationEventBus;
 import de.kaiserpfalzedv.status.api.model.Metadata;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ServiceTest {
-    private final EventBus bus = new EventBus("TEST");
+    private final ApplicationEventBus bus = new TestEventBus();
     
     private final OffsetDateTime DEFAULT_START = OffsetDateTime.now();
     private final Service DEFAULT = Service.builder()

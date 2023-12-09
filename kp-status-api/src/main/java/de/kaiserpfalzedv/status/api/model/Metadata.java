@@ -22,14 +22,16 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.Builder.Default;
 import lombok.extern.jackson.Jacksonized;
 
 
@@ -52,38 +54,43 @@ public class Metadata implements HasId {
 
 
     /** The ID of the object. */
-    @Default
     @NotNull
+    @NonNull
     @EqualsAndHashCode.Include
     @ToString.Include
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
 
     /** The namespace of this object. */
     @NotNull
+    @NonNull
     @ToString.Include
     private final String namespace;
 
     /** The name of the object. Defaults to a string representation of the ID. */
     @NotNull
+    @NonNull
     @ToString.Include
     private final String name;
 
     /** The creation timestamp of the object. */
     @NotNull
+    @NonNull
     @ToString.Include
     private final OffsetDateTime created;
 
     /** The last modification of the object. */
     @NotNull
+    @NonNull
     private final OffsetDateTime modified;
 
     /** The deletion timestamp of the object. */
-    @Null
+    @Nullable
     private final OffsetDateTime deleted;
 
     /**
      * @return true if the object is deleted.
      */
+    @JsonIgnore
     public boolean isDeleted() {
         return deleted != null;
     }

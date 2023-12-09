@@ -22,6 +22,7 @@ package de.kaiserpfalzedv.status.api.model.state;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 import de.kaiserpfalzedv.status.api.model.service.Service;
 import jakarta.validation.constraints.NotNull;
@@ -46,8 +47,10 @@ import lombok.experimental.SuperBuilder;
 public abstract class StateBase implements State {
     @ToString.Include
     @Default
-    @NotNull
-    @NonNull
+    private final UUID id = UUID.randomUUID();
+
+    @ToString.Include
+    @Default
     private final OffsetDateTime start = OffsetDateTime.now(ZoneOffset.UTC);
 
     @ToString.Include
@@ -71,5 +74,10 @@ public abstract class StateBase implements State {
     @Override
     public boolean isDependencyDown() {
         return service.getDependencies().stream().anyMatch(s -> s.isDown());
+    }
+
+    @Override
+    public State getSource() {
+        return this;
     }
 }

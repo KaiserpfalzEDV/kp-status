@@ -19,6 +19,7 @@ package de.kaiserpfalzedv.status.api.model.state;
 
 import java.util.Set;
 
+import de.kaiserpfalzedv.status.api.events.ApplicationBusEvent;
 import de.kaiserpfalzedv.status.api.model.HasDuration;
 import de.kaiserpfalzedv.status.api.model.degradation.Degradation;
 import jakarta.validation.constraints.NotNull;
@@ -29,9 +30,13 @@ import jakarta.validation.constraints.NotNull;
  * @version 1.0.0
  * @since 2023-11-12
  */
-public interface State extends HasDuration, HasState {
+public interface State extends HasDuration, HasState, ApplicationBusEvent<State> {
+    /** @return The degragation or multiple degradations which are the base reason(s) to this state. */
     public Set<Degradation> getDegradation();
     
+    /** @return The new state after a new failing degradation. */
     public State fail(@NotNull final Degradation degradation);
+
+    /** @return The new state after the given degradation is recovered. */
     public State recover(@NotNull final Degradation degradation);
 }
